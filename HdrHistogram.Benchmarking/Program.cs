@@ -11,13 +11,10 @@ namespace HdrHistogram.Benchmarking
         static void Main(string[] args)
         {
             var manualConfig = ManualConfig.Create(DefaultConfig.Instance);
-            manualConfig.Add(new MemoryDiagnoser());
+            manualConfig.AddDiagnoser();
             //manualConfig.Add(new BenchmarkDotNet.Diagnostics.Windows.InliningDiagnoser());
             //manualConfig.Add(HardwareCounter.BranchMispredictions, HardwareCounter.BranchInstructions);
-            var config = manualConfig
-                .With(Job.Clr.With(Jit.LegacyJit))
-                .With(Job.Clr.With(Jit.RyuJit))
-                .With(Job.Core.With(Jit.RyuJit));
+            var config = manualConfig;
 
             var switcher = new BenchmarkSwitcher(new[] {
                 typeof(LeadingZeroCount.LeadingZeroCount64BitBenchmark),
