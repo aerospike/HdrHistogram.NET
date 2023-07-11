@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using HdrHistogram.Utilities;
 
@@ -27,10 +28,12 @@ namespace HdrHistogram
         /// <returns>Return a lazily evaluated sequence of histograms.</returns>
         public static IEnumerable<HistogramBase> Read(Stream inputStream)
         {
-            using (var reader = new HistogramLogReader(inputStream))
+            using var reader = new HistogramLogReader(inputStream);
+            
+            foreach(var histogram in reader.ReadHistograms())
             {
-                return reader.ReadHistograms();
-            }
+                yield return histogram;
+            }            
         }
 
         /// <summary>

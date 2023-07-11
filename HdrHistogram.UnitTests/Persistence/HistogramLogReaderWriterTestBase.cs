@@ -29,13 +29,11 @@ namespace HdrHistogram.UnitTests.Persistence
                 data = writerStream.ToArray();
             }
 
-            using (var readerStream = new MemoryStream(data))
-            {
-                var reader = new HistogramLogReader(readerStream);
-                Assert.Empty(reader.ReadHistograms().ToList());
-                var actualStartTime = reader.GetStartTime().SecondsSinceUnixEpoch().Round(3);
-                Assert.Equal(expectedStartTime, actualStartTime);
-            }
+            using var readerStream = new MemoryStream(data);            
+            var reader = new HistogramLogReader(readerStream);
+            Assert.Empty(reader.ReadHistograms().ToList());
+            var actualStartTime = reader.GetStartTime().SecondsSinceUnixEpoch().Round(3);
+            Assert.Equal(expectedStartTime, actualStartTime);            
         }
 
         [Theory]
@@ -49,7 +47,7 @@ namespace HdrHistogram.UnitTests.Persistence
             var data = histogram.WriteLog();
             var actualHistograms = data.ReadHistograms();
 
-            Assert.Equal(1, actualHistograms.Length);
+            Assert.Single(actualHistograms);
             HistogramAssert.AreValueEqual(histogram, actualHistograms.Single());
         }
 
@@ -63,7 +61,7 @@ namespace HdrHistogram.UnitTests.Persistence
             var data = histogram.WriteLog();
             var actualHistograms = data.ReadHistograms();
 
-            Assert.Equal(1, actualHistograms.Length);
+            Assert.Single(actualHistograms);
             HistogramAssert.AreValueEqual(histogram, actualHistograms.Single());
         }
 
@@ -81,7 +79,7 @@ namespace HdrHistogram.UnitTests.Persistence
             var data = histogram.WriteLog();
             var actualHistograms = data.ReadHistograms();
 
-            Assert.Equal(1, actualHistograms.Length);
+            Assert.Single(actualHistograms);
             Assert.Equal(tag, actualHistograms[0].Tag);
             HistogramAssert.AreValueEqual(histogram, actualHistograms.Single());
         }
