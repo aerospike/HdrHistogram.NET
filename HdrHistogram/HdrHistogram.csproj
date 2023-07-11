@@ -7,17 +7,25 @@
     <PackageReleaseNotes>NetStandard 2.1 release</PackageReleaseNotes>
     <Copyright>Copyright 2020</Copyright>
     <PackageTags>HdrHistogram HdrHistogram.NET Histogram Instrumentation</PackageTags>
-    <PackageProjectUrl>https://github.com/HdrHistogram/HdrHistogram.NET</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/HdrHistogram/HdrHistogram.NET/master/LICENSE.txt</PackageLicenseUrl>
     <PackageIconUrl>http://hdrhistogram.github.io/HdrHistogram.NET/HdrHistogram-icon-64x64.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/aerospike/HdrHistogram.NET</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/aerospike/HdrHistogram.NET</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageTags>aerospike hdrhistogram</PackageTags>
+    <Version>1.0.2.0</Version>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <PackageOutputPath>.\package\</PackageOutputPath>
+  </PropertyGroup>
   
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.1\HdrHistogram.xml</DocumentationFile>
-    <DefineConstants>RELEASE;NETSTANDARD2_0;;NETSTANDARD2_1</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DefineConstants>RELEASE</DefineConstants>
   </PropertyGroup>
 
 </Project>
